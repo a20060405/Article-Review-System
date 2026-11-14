@@ -1,43 +1,29 @@
-import getpass
-from pwdlib import PasswordHash
 from db import get_connection
-
-password_hash = PasswordHash.recommended()
 
 conn = get_connection()
 
 try:
     with conn.cursor() as cur:
-        for username, role in [
+        users = [
             ("author1", "author"),
             ("editor1", "editor")
-        ]:
-            password = getpass.getpass(
-                f"請設定 {username} 的密碼："
-            )
+        ]
 
-            hashed = password_hash.hash(password)
+        for username, role in users:
+            cur.execute("""
+                INSERT INTO users (username, role)
+                VALUES (%s, %s)
+                ON CONFLICT (username) DO NOTHING
+            """, (username, role))
 
-            cur.execute(
-                """
-                INSERT INTO users (username, password_hash, role)
-                VALUES (%s, %s, %s)
-                ON CONFLICT (username)
-                DO NOTHING
-                """,
-                (username, hashed, role)
-            )
-
-            if cur.rowcount == 1:
-                print(f"✅ {username} 建立成功")
-            else:
-                print(f"ℹ️ {username} 已存在，未修改")
+            print(f"✅ 帳號 {username} 已建立或已存在")
 
     conn.commit()
+    print("✅ 測試帳號設定完成！")
 
-except Exception:
+except Exception as e:
     conn.rollback()
-    raise
+    print("❌ 發生錯誤：", e)
 
 finally:
     conn.close()
