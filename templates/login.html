@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Editorial Studio｜登入</title>
+<style>
+* { box-sizing:border-box; }
+body {
+  margin:0; min-height:100vh;
+  font-family:Arial,"Noto Sans TC",sans-serif;
+  display:grid; place-items:center; color:white;
+  background:radial-gradient(circle at 25% 20%,#6544b8,transparent 45%),
+             linear-gradient(130deg,#0d1029,#25204f,#10182d);
+}
+.card {
+  width:min(440px,92vw); padding:44px;
+  background:#ffffff12; border:1px solid #ffffff30;
+  border-radius:28px; backdrop-filter:blur(20px);
+  box-shadow:0 30px 90px #0005;
+}
+.brand { color:#c4b5fd;letter-spacing:4px;font-size:12px; }
+h1 { font-size:34px;margin:25px 0 8px; }
+p { color:#c4c0d8;line-height:1.8; }
+label { display:block;margin:25px 0 10px; }
+select {
+  width:100%;padding:16px;background:#ffffff18;
+  color:white;border:1px solid #ffffff40;
+  border-radius:12px;font-size:16px;
+}
+option { color:#1e1b4b; }
+button {
+  width:100%;margin-top:25px;padding:17px;
+  border:0;border-radius:12px;
+  color:white;font-size:16px;font-weight:bold;
+  background:linear-gradient(90deg,#a855f7,#6366f1);
+  cursor:pointer;
+}
+button:hover { filter:brightness(1.15); }
+small {display:block;margin-top:24px;color:#aaa4c7;text-align:center;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand">EDITORIAL STUDIO</div>
+  <h1>歡迎使用</h1>
+  <p>專業投稿與審查管理平台<br>選擇您的角色以進入系統。</p>
+  <form action="/login" method="post">
+    <label for="username">登入身分</label>
+    <select name="username" id="username" required>
+      <option value="author1">作者 — 投稿管理</option>
+      <option value="editor1">編輯 — 稿件審查</option>
+    </select>
+    <button type="submit">進入管理平台 →</button>
+  </form>
+  <small>課堂專案展示系統</small>
+</div>
+</body>
+</html>
