@@ -32,3 +32,12 @@ CREATE UNIQUE INDEX users_username_key ON public.users USING btree (username);
 ALTER TABLE ONLY "public"."articles" ADD CONSTRAINT "articles_author_id_fkey" FOREIGN KEY (author_id) REFERENCES users(id) NOT DEFERRABLE;
 
 -- 2026-11-14 08:48:47 UTC
+ -- 限制使用者只能是作者或編輯
+ALTER TABLE public.users
+ADD CONSTRAINT users_role_check
+CHECK (role IN ('author', 'editor'));
+
+-- 限制稿件只能有三種審查狀態
+ALTER TABLE public.articles
+ADD CONSTRAINT articles_status_check
+CHECK (status IN ('draft', 'reviewing', 'approved'));
